@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register!</title>
+     {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/registerform.css' %}">
+</head>
+<body>
+<div class="back-button">
+	<a href="/" class="label">back</a>
+</div>
+{% block content %}
+<div class="registration-form">
+   <form method="post" action="{% url 'register' %}">
+        <div class="container">
+          <h1>Sign Up</h1>
+             {% csrf_token %}
+          <p>Please fill in this form to create an account.</p>
+              <label ><b>Firstname</b></label>
+            <input type="text" name="firstname" placeholder="Enter firstname" required>
+           <label ><b>Lastname</b></label>
+            <input type="text" name="lastname" placeholder="Enter lastname" required>
+          <label ><b>Email</b></label>
+          <input type="email" placeholder="Enter Email" name="email" required>
+          <label><b>Password</b></label>
+          <input type="password" placeholder="Enter Password" name="password" required>
+            <label><b>Company</b></label>
+          <input type="text" placeholder="Enter company name" name="company" required>
+                   <!-- Add an invisible input field for userID -->
+        <input type="hidden" name="userID" value="USER-{{ next_user_id }}">
+
+        <br>
+
+          <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
+
+          <div class="clearfix">
+
+            <button type="submit" class="btn">Sign Up</button>
+          </div>
+        </div>
+      </form>
+
+</div>
+{% endblock %}
+</body>
+</html>

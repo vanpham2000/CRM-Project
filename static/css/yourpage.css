@@ -1,0 +1,46 @@
+body {
+	margin: 0;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	font-family: 'Roboto';
+	background-color: white;
+}
+.fa{
+	margin-right: 5px;
+	font-size: 1.2rem;
+}
+.nav-bar {
+	width: 550px;
+	background-color: #47cf73;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	border-radius: 50px;
+	box-shadow:  6px 6px 12px #777777,
+             -6px -6px 12px #ffffff;
+}
+.nav {
+	flex: 1;
+	padding: 20px 20px;
+	color: white;
+	text-align: center;
+	font-size: 0.9rem;
+	text-decoration: none;
+
+}
+a{
+	white-space: nowrap;
+}
+.active{
+	color: #73ffe8;
+}
+a:hover{
+	background-color: #382454;
+	border-radius: 50px;
+	box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+	font-size: 1rem;
+}

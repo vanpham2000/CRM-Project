@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+     {% load static %}  <!-- Load the static tag library here -->
+   <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+
+</head>
+<body>
+<div class="back-button">
+	<a href="/" class="label">back</a>
+</div>
+
+<div>
+  <form method="post">
+    <h1>Log in</h1>
+      {% csrf_token %}
+    <input type="email" name="email" placeholder="Email"/>
+    <input type="password" name="password" placeholder="Password"/>
+    <button type="submit">LOGIN</button>
+    <a href="#">Forgot your password?</a>
+  </form>
+    {% if error_message %}
+    <p>{{ error_message }}</p>
+{% endif %}
+</div>
+
+</body>
+</html>

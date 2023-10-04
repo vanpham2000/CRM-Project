@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+         {% load static %}  <!-- Load the static tag library here -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/WelcomePage.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div class="nav-bar">
+    <a href="#" class="nav">REPORT</a>
+    <a href="#" class="nav">MARKETING</a>
+    <a href="/login" class="nav">CRM</a>
+<!--    <a href="/register" class="nav">REGISTER</a>-->
+</div>
+
+<div class="welcome-text">
+    Welcome to my project!!
+</div>
+
+</body>
+</html>
