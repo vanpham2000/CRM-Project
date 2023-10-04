@@ -22,7 +22,9 @@ from landingpage.views import (
     register,
     welcome,
     AccessDenied,
-    Error
+    Error,
+    CustomerAccounts
+
 )
 
 
@@ -31,8 +33,10 @@ urlpatterns = [
     path('login/', VerifyAccount , name='userlogin'),
     path('', nav , name='welcome_page'),
     path('register123/', register, name="register"),
-    path('accessdenied', AccessDenied, name='accessdenied'),
     path('welcome/<str:user_identifier>/', welcome, name='welcome'),
+    path('welcome/<str:user_identifier>/customers/', CustomerAccounts, name='customeraccount'),
     path('<path:catch_all>/',Error, name='catch_all_error'),
+    path('accessdenied', AccessDenied, name='accessdenied'),
+
 
 ]

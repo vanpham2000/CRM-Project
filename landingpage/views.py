@@ -1,10 +1,12 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import MyAccountModel
+from django.urls import reverse
+from .models import MyAccountModel, CustomerAccount
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth import login, authenticate
+from .filter import CustomerAccountFilter # Import your filter class
 
 
 # Create your views here.
@@ -16,13 +18,68 @@ def Error(request, catch_all):
     return render(request, "error.html")
 
 @login_required
+def CustomerAccounts(request,user_identifier):
+    user = get_object_or_404(MyAccountModel, userID=user_identifier)
+    # url = reverse('customeraccount', userID=[user_identifier])
+    role = user.role
+    if role =="Manager":
+        all_customer_accounts = CustomerAccount.objects.all()
+        customer_filter = CustomerAccountFilter(request.GET, queryset=all_customer_accounts)
+        paginator = Paginator(customer_filter.qs, 10)  # Show 10 customer accounts per page
+
+        # Create a list of dictionaries to store the data for each customer account
+        customer_data_list = []
+        for account in all_customer_accounts:
+            customer_data = {
+                'accountID': account.accountID,
+                'firstname': account.firstname,
+                'lastname': account.lastname,
+                'email': account.email,
+                'phone_number': account.phone_number,
+                'address': account.address,
+                'state': account.state,
+                'city': account.city,
+                'zipcode': account.zipcode,
+                'birthdate': account.birthdate,
+                'created_date': account.created_date,
+            }
+            customer_data_list.append(customer_data)
+
+            page = request.GET.get('page')
+            customers = paginator.get_page(page)
+
+        context = {
+            'filter': customer_filter,
+            'customer_data_list': customer_data_list,
+        }
+
+        return render(request, 'customeraccount.html', context)
+    else:
+        return render(request, 'customeraccount.html', {})
+
+def customer_search(request):
+    customer_list = CustomerAccount.objects.all()
+    customer_filter = CustomerAccountFilter(request.GET, queryset=customer_list)
+
+    paginator = Paginator(customer_filter.qs, 10)  # Show 10 customer accounts per page
+
+    page = request.GET.get('page')
+    customers = paginator.get_page(page)
+
+    context = {
+        'filter': customer_filter,
+        'customers': customers,
+    }
+
+    return render(request, 'customer_search.html', context)
+
+@login_required
 def welcome(request, user_identifier):
     # Get the user's own ID from the session (if it exists)
     user_id_in_session = request.session.get('access')
 
     # Retrieve the user from the database based on the user identifier
     user = get_object_or_404(MyAccountModel, userID=user_identifier)
-    role = user.role
     if user_id_in_session and user_id_in_session != user.userID:
         # Redirect to an "access denied" page or handle it in your preferred way
         return redirect('accessdenied')
@@ -30,9 +87,10 @@ def welcome(request, user_identifier):
     # Store the user's ID in the session only if it doesn't exist
     if not user_id_in_session:
         request.session['access'] = user.userID
-
-    # if role == 'Manager':
-    #     return redirect('manager_page')
+    #
+    # if user.role == 'Manager':
+    #     # Redirect to the customeraccount page with the user identifier as a parameter
+    #     return redirect('customeraccount')
     # elif role == 'Marketing':
     #     return redirect('marketing_page')
     # elif role == 'Data Analyze':
@@ -67,6 +125,7 @@ def VerifyAccount(request):
             user = MyAccountModel.objects.get(email=email)
             if check_password(password,user.password):
                 return redirect('welcome', user_identifier=user.userID)
+                request.session['access'] = user.userID
             else:
                 return render(request, 'index.html',  {'error_message': 'Invalid email or password'})
         except MyAccountModel.DoesNotExist:
