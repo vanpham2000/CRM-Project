@@ -33,3 +33,8 @@ class MyOrderDetailModelForm(forms.ModelForm):
     class Meta:
         model = OrderDetail
         exclude = ['orderID']  # Exclude the 'userID' field from the form
+
+class CustomerForm(forms.ModelForm):
+    class Meta:
+        model = CustomerAccount
+        fields = '__all__'  # You can specify the fields you want to include here

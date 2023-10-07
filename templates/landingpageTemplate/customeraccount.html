@@ -3,68 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+<!--    <link rel="stylesheet" href="styles.css">-->
     <title>Data Table</title>
-     {% load static %}  <!-- Load the static tag library here -->
-   <link rel="stylesheet" type="text/css" href="{% static 'css/customeraccount.css' %}">
+     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+       {% load static %}  <!-- Load the static tag library here -->
+      <link rel="stylesheet" type="text/css" href="{% static 'css/customeraccount.css' %}">
 </head>
 <body>
 <div class="search-container">
 
     <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
 </div>
-    <div class="table-container">
-        <table id="myTable">
-                <tr class="header">
-                    <th>Account ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Phone Number</th>
-                    <th>Address</th>
-                    <th>State</th>
-                    <th>City</th>
-                    <th>Zipcode</th>
-                    <th>Birthdate</th>
-                    <th>Created Date</th>
-                </tr>
-                <tr>
-                     {% for customer_data in customer_data_list %}
-                    <td>{{ customer_data.accountID }}</td>
-                    <td>{{ customer_data.firstname }}</td>
-                    <td>{{ customer_data.lastname }}</td>
-                    <td>{{ customer_data.email }}</td>
-                    <td>{{ customer_data.phone_number }}</td>
-                    <td>{{ customer_data.address }}</td>
-                    <td>{{ customer_data.state }}</td>
-                    <td>{{ customer_data.city }}</td>
-                    <td>{{ customer_data.zipcode }}</td>
-                    <td>{{ customer_data.birthdate }}</td>
-                    <td>{{ customer_data.created_date }}</td>
-                     <td>
-                     <div class="button-container">
-                         <button onclick="editRecord(this)" class="edit-button">Edit</button>
-                         <button onclick="deleteRecord(this)" class="delete-button">Delete</button>
-                     </div>
-                 </td>
-                </tr>
+    <div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <br>
+      <!-- Add a button for adding new rows (optional) -->
+      <!-- Replace 'add-row' class with your preferred class or use Django forms for adding rows -->
+      <button class="btn btn-default pull-right add-row"><i class="fa fa-plus"></i>&nbsp;&nbsp; Add Row</button>
+    </div>
+  </div>
 
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-bordered" id="editableTable">
+        <thead>
+          <tr>
+            <th>Account ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Address</th>
+            <th>State</th>
+            <th>City</th>
+            <th>Zipcode</th>
+            <th>Birthdate</th>
+            <th>Edit/Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for customer_data in customer_data_list %}
+          <tr data-id="{{ customer_data.accountID }}">
+            <td data-field="accountID">{{ customer_data.accountID }}</td>
+            <td data-field="firstname">{{ customer_data.firstname }}</td>
+            <td data-field="lastname">{{ customer_data.lastname }}</td>
+            <td data-field="email">{{ customer_data.email }}</td>
+            <td data-field="phone_number">{{ customer_data.phone_number }}</td>
+            <td data-field="address">{{ customer_data.address }}</td>
+            <td data-field="state">{{ customer_data.state }}</td>
+            <td data-field="city">{{ customer_data.city }}</td>
+            <td data-field="zipcode">{{ customer_data.zipcode }}</td>
+            <td data-field="birthdate">{{ customer_data.birthdate }}</td>
+            <td>
+              <!-- Add buttons for editing and deleting -->
+                <a class="btn btn-primary edit" href="{% url 'edit_customer' user_identifier=user_identifier customer_id=customer_data.accountID %}">Edit</a>
 
-                {% empty %}
-                <tr>
-                    <td colspan="11">No customer accounts available.</td>
-                </tr>
-            {% endfor %}
-                <!-- Add more rows as needed -->
-        </table>
- <div class="pagination">
-            <span id="prev-page">&laquo;</span>
-            <span class="page-number active">1</span>
-            <!-- Additional page numbers will be added dynamically when needed -->
-            <span id="next-page">&raquo;</span>
-        </div>
-    {% load static %}
+              <button class="button button-small delete" title="Delete">
+                <i class="fa fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<!-- Add this HTML code to your template -->
+<p>User Identifier: {{ user_identifier }}</p>
+<!-- Edit Record Modal -->
+<!-- Modal for Editing Records -->
+
+    <script>
+      var userIdentifier = '{{ user_identifier }}';
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="{% static 'js/customeraccount.js' %}"></script>
-<!--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
 </body>
 </html>

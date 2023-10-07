@@ -19,11 +19,11 @@ from django.urls import path, re_path
 from landingpage.views import (
     VerifyAccount,
     nav,
-    register,
     welcome,
     AccessDenied,
     Error,
-    CustomerAccounts
+    CustomerAccounts,
+    edit_customer
 
 )
 
@@ -32,11 +32,15 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', VerifyAccount , name='userlogin'),
     path('', nav , name='welcome_page'),
-    path('register123/', register, name="register"),
     path('welcome/<str:user_identifier>/', welcome, name='welcome'),
     path('welcome/<str:user_identifier>/customers/', CustomerAccounts, name='customeraccount'),
+    path('welcome/<str:user_identifier>/customers/<str:customer_id>/edit/', edit_customer, name='edit_customer'),
+
+    # path('welcome/<str:user_identifier>/success/', edit_customer, name='success'),
+    # path('delete_customer/<int:customer_id>/', views.delete_customer, name='delete_customer'),
     path('<path:catch_all>/',Error, name='catch_all_error'),
     path('accessdenied', AccessDenied, name='accessdenied'),
+
 
 
 ]

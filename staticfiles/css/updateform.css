@@ -1,0 +1,71 @@
+/* Style the form container */
+#editForm {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style form group elements */
+.form-group {
+  margin-bottom: 15px;
+}
+
+/* Style form labels */
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* Style form inputs */
+.form-control {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Style the save button */
+#saveChanges {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Style the close button */
+.btn-secondary {
+  background-color: #ccc;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Add spacing for the footer */
+.modal-footer {
+  margin-top: 20px;
+  text-align: right;
+}
+
+/* Add hover effect to buttons */
+#saveChanges:hover,
+.btn-secondary:hover {
+  opacity: 0.8;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  #editForm {
+    width: 90%;
+  }
+}

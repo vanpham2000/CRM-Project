@@ -1,96 +1,104 @@
-function myFunction() {
-  // Declare variables
-  var input, filter, table, tr, td, i, j, txtValue;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("myTable");
-  tr = table.getElementsByTagName("tr");
+//// JavaScript for opening and populating the edit modal
+//  $(document).ready(function () {
+//    $('.edit').on('click', function () {
+//      var customerId = $(this).data('customer-id');
+//
+//      // Send an AJAX request to your Django view
+//      $.ajax({
+//        url: `edit_customer/${customerId}/`,  // Construct the URL dynamically
+//        method: 'POST',
+//        success: function (data) {
+//          $('#edit-accountID').val(data.accountID);
+//          $('#edit-firstname').val(data.firstname);
+//          $('#edit-lastname').val(data.lastname);
+//          $('#edit-email').val(data.email);
+//          $('#edit-phone_number').val(data.phone_number);
+//          $('#edit-address').val(data.address);
+//          $('#edit-state').val(data.state);
+//          $('#edit-city').val(data.city);
+//          $('#edit-zipcode').val(data.zipcode);
+//          $('#edit-birthdate').val(data.birthdate);
+//
+//      // Show the modal
+//      $('#editModal').modal('show');
+//        },
+//        error: function (error) {
+//          // Handle errors if any
+//        }
+//      });
+//    });
+//  });
+//
+//
+//$(document).ready(function () {
+//  // Handle click event on the "Edit" button
+//  $('.edit').click(function () {
+////    var userIdentifier = '{{ user_identifier }}';
+//    var accountID = $(this).data('id');
+//    console.log('Clicked Edit for accountID:', accountID); // Debug
+//    console.log('Clicked Edit for user:', userIdentifier ); // Debug
+//    var firstname = $(this).closest('td').find('[data-field="firstname"]').text();
+//    var lastname = $(this).closest('td').find('[data-field="lastname"]').text();
+//    var email = $(this).closest('td').find('[data-field="email"]').text();
+//    var phoneNumber = $(this).closest('td').find('[data-field="phone_number"]').text();
+//    var address = $(this).closest('td').find('[data-field="address"]').text();
+//    var state = $(this).closest('td').find('[data-field="state"]').text();
+//    var city = $(this).closest('td').find('[data-field="city"]').text();
+//    var zipcode = $(this).closest('td').find('[data-field="zipcode"]').text();
+//    var birthdate = $(this).closest('td').find('[data-field="birthdate"]').text();
+//    // ... (Your existing code to populate the modal fields)
+//  });
+//
+//  // Handle save changes button click event
+//  $('#saveChanges').click(function () {
+////    $('#edit-accountID').val(accountID);
+//    $('#edit-firstname').val(firstname);
+//    $('#edit-lastname').val(lastname);
+//    $('#edit-email').val(email);
+//    $('#edit-phone_number').val(phoneNumber); // Populate phone number field
+//    $('#edit-address').val(address); // Populate address field
+//    $('#edit-state').val(state); // Populate state field
+//    $('#edit-city').val(city); // Populate city field
+//    $('#edit-zipcode').val(zipcode); // Populate zipcode field
+//    $('#edit-birthdate').val(birthdate); // Populate birthdate field
+//    // Get values of other fields as needed
+//
+//    // Create a data object to send in the AJAX request
+//    var data = {
+//      accountID: accountID,
+//      firstname: firstname,
+//      lastname: lastname,
+//      email: email,
+//      phone_number: phoneNumber, // Include phone number
+//      address: address, // Include address
+//      state: state, // Include state
+//      city: city, // Include city
+//      zipcode: zipcode, // Include zipcode
+//      birthdate: birthdate // Include birthdate
+//      // Include other fields here
+//    };
+//
+//    // Send an AJAX POST request to update the customer data
+//    $.ajax({
+//      type: 'POST',
+//      url: '/welcome/' + user_identifier + '/customers' + accountID + '/',
+//      data: data,
+//      success: function(response) {
+//        // Handle the success response (e.g., show a success message)
+//        console.log('Data updated successfully:', response.message);
+//        // Close the modal after saving
+//        $('#editModal').modal('hide');
+//      },
+//      error: function(error) {
+//        // Handle any errors that occur during the AJAX request
+//        console.error('Error updating data:', error.responseJSON.error);
+//      }
+//    });
+//  });
+//});
+//
+//
 
-  // Loop through all table rows
-  for (i = 0; i < tr.length; i++) {
-    // Initialize an array to store whether each column contains the search filter
-    var match = [];
 
-    // Loop through each column (td element) in the current row
-    for (j = 0; j < tr[i].cells.length; j++) {
-      td = tr[i].cells[j];
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        // Check if the column value contains the search filter
-        match.push(txtValue.toUpperCase().indexOf(filter) > -1);
-      }
-    }
 
-    // If any column matches the filter, display the row; otherwise, hide it
-    if (match.includes(true)) {
-      tr[i].style.display = "";
-    } else {
-      tr[i].style.display = "none";
-    }
-  }
-}
 
-// Define variables
-var currentPage = 1; // Current page number
-var itemsPerPage = 10; // Number of items to display per page
-var totalRecords = document.querySelectorAll("#myTable tbody tr").length; // Total number of records
-
-// Function to show items for the given page
-function showPage(pageNumber) {
-    var tableRows = document.querySelectorAll("#myTable tbody tr");
-    var startIndex = (pageNumber - 1) * itemsPerPage;
-    var endIndex = startIndex + itemsPerPage;
-
-    for (var i = 0; i < tableRows.length; i++) {
-        if (i >= startIndex && i < endIndex) {
-            tableRows[i].style.display = "table-row";
-        } else {
-            tableRows[i].style.display = "none";
-        }
-    }
-}
-
-// Function to handle clicking on page numbers or navigation buttons
-document.querySelector(".pagination").addEventListener("click", function (e) {
-    if (e.target && e.target.matches(".page-number")) {
-        // Clicked on a page number
-        var pageNumber = parseInt(e.target.textContent);
-        currentPage = pageNumber;
-        showPage(pageNumber);
-        updatePaginationUI();
-    } else if (e.target && e.target.id === "prev-page") {
-        // Clicked on the previous page button
-        if (currentPage > 1) {
-            currentPage--;
-            showPage(currentPage);
-            updatePaginationUI();
-        }
-    } else if (e.target && e.target.id === "next-page") {
-        // Clicked on the next page button
-        var totalPages = Math.ceil(totalRecords / itemsPerPage);
-        if (currentPage < totalPages) {
-            currentPage++;
-            showPage(currentPage);
-            updatePaginationUI();
-        }
-    }
-});
-
-// Function to update the pagination UI (active page)
-function updatePaginationUI() {
-    var pageNumbers = document.querySelectorAll(".page-number");
-    pageNumbers.forEach(function (pageNumberElement) {
-        pageNumberElement.classList.remove("active");
-        if (parseInt(pageNumberElement.textContent) === currentPage) {
-            pageNumberElement.classList.add("active");
-        }
-    });
-}
-
-// Function to check and update pagination when records are added
-function checkAndUpdatePagination() {
-    totalRecords = document.querySelectorAll("#myTable tbody tr").length;
-    var totalPages = Math.ceil(totalRecords / itemsPerPage);
-    if (currentPage > totalPages) {
-        currentPage = totalPages;
-        showPage(currentPage
