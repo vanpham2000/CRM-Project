@@ -3,62 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-      {% load static %}  <!-- Load the static tag library here -->
-      <link rel="stylesheet" type="text/css" href="{% static 'css/updateform.css' %}">
+    {% load static %}  <!-- Load the static tag library here -->
+    <link href="{% static 'css/updateform.css' %}" rel="stylesheet" type="text/css">
 </head>
 <body>
-<form id="editForm" method="POST" >
-           {% csrf_token %}
-          <div class="form-group">
-            <label for="edit-accountID">Account ID</label>
-            <input type="text" class="form-control" placeholder="{{customer_data.accountID }}" id="edit-accountID" name="accountID" readonly>
-          </div>
-          <div class="form-group">
-            <label for="edit-firstname">First Name</label>
-            <input type="text" class="form-control" id="edit-firstname" value="{{ customer.firstname }}" name="firstname">
-          </div>
-          <div class="form-group">
-            <label for="edit-lastname">Last Name</label>
-            <input type="text" class="form-control" id="edit-lastname" value="{{ customer.lastname }}" name="lastname">
-          </div>
-          <div class="form-group">
-            <label for="edit-email">Email</label>
-            <input type="email" class="form-control" id="edit-email" value="{{ customer.email }}" name="email">
-          </div>
-          <div class="form-group">
-            <label for="edit-phone_number">Phone Number</label>
-            <input type="tel" class="form-control" id="edit-phone_number" value="{{ customer.phone_number }}" name="phone_number">
-          </div>
-          <div class="form-group">
-            <label for="edit-address">Address</label>
-            <input type="text" class="form-control" value="{{ customer.address }}" id="edit-address" name="address">
-          </div>
-          <div class="form-group">
-            <label for="edit-state">State</label>
-            <input type="text" class="form-control"  value="{{ customer.state }}" id="edit-state" name="state">
-          </div>
-          <div class="form-group">
-            <label for="edit-city">City</label>
-            <input type="text" class="form-control" id="edit-city"  value="{{ customer.city }}" name="city">
-          </div>
-          <div class="form-group">
-            <label for="edit-zipcode">Zipcode</label>
-            <input type="text" class="form-control" id="edit-zipcode" value="{{ customer.zipcode }}" name="zipcode">
-          </div>
-          <div class="form-group">
-            <label for="edit-birthdate">Birthdate</label>
-            <input type="date" class="form-control" id="edit-birthdate" value="{{ customer.birthdate }}" name="birthdate">
-          </div>
-          <!-- Add form fields for other attributes -->
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="saveChanges">Save Changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-
+<form class="form">
+    <h1>Updating Record {{customer_id}}: {{firstname}} {{lastname}}</h1>
+    <p type="Firstname:"><input placeholder="update firstname here...."></input></p>
+    <p type="Lastname:"><input placeholder="update lastname here..."></input></p>
+    <p type="Phone numbers:"><input type="tel" placeholder="update phone number here..."></input></p>
+    <p type="Email:"><input type="email" placeholder="update email here..."></input></p>
+    <p type="State:"><input placeholder="update state here..."></input></p>
+    <p type="City:"><input placeholder="update city here..."></input></p>
+    <p type="Zipcode:"><input placeholder="update zipcode here..."></input></p>
+    <p type="Birthdate:"><input type="date" placeholder="update Birthdate here..."></input></p>
+    <button>Send</button>
+     <a href="{% url 'customeraccount' user_identifier=user_identifier %}" class="nav search">
+    <i class="fa fa-search"></i> back
+</a>
+</form>
 </body>
 </html>

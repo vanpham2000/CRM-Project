@@ -20,42 +20,6 @@ def Error(request, catch_all):
     return render(request, "error.html")
 
 
-# @login_required
-# def CustomerAccounts(request, user_identifier):
-#     user = get_object_or_404(MyAccountModel, userID=user_identifier)
-#     # url = reverse('customeraccount', userID=[user_identifier])
-#     role = user.role
-#     if role == "Manager":
-#         all_customer_accounts = CustomerAccount.objects.all()
-#
-#         # Create a list of dictionaries to store the data for each customer account
-#         customer_data_list = []
-#         for account in all_customer_accounts:
-#             customer_data = {
-#                 'accountID': account.accountID,
-#                 'firstname': account.firstname,
-#                 'lastname': account.lastname,
-#                 'email': account.email,
-#                 'phone_number': account.phone_number,
-#                 'address': account.address,
-#                 'state': account.state,
-#                 'city': account.city,
-#                 'zipcode': account.zipcode,
-#                 'birthdate': account.birthdate,
-#                 'created_date': account.created_date,
-#             }
-#             customer_data_list.append(customer_data)
-#
-#         context = {
-#             'customer_data_list': customer_data_list,
-#         }
-#
-#         return render(request, 'customeraccount.html', context)
-#     else:
-#         return render(request, 'customeraccount.html', {})
-
-
-
 @login_required
 def welcome(request, user_identifier):
     # Get the user's own ID from the session (if it exists)
@@ -133,29 +97,12 @@ def CustomerAccounts(request, user_identifier):
         return render(request, 'customeraccount.html', {})
 
 
-
 def nav(request):
     return render(request, "WelcomePage.html", {})
 
 def success(request):
     return render(request, "success.html", {})
 
-# def VerifyAccount(request):
-#     if request.method == 'POST':
-#         email = request.POST.get('email')
-#         password = request.POST.get('password')
-#
-#         try:
-#             user = MyAccountModel.objects.get(email=email)
-#             if check_password(password, user.password):
-#                 return redirect('welcome', user_identifier=user.userID)
-#             else:
-#                 return render(request, 'index.html', {'error_message': 'Invalid email or password'})
-#         except MyAccountModel.DoesNotExist:
-#             return render(request, 'index.html', {'error_message': 'Invalid email or password'})
-#
-#     else:
-#         return render(request, "index.html")
 
 def VerifyAccount(request):
     if request.method == 'POST':
@@ -222,54 +169,41 @@ def VerifyAccount(request):
 def edit_customer(request,user_identifier,customer_id):
     # Get the customer object by ID or return a 404 error if it doesn't exist
     customer = get_object_or_404(CustomerAccount,  accountID=customer_id)
+    # user = get_object_or_404(MyAccountModel, userID=user_identifier)
 
-    return render(request, 'successupdate.html')
-    # if request.method == 'POST':
-    #     # Update the customer object with the form data
-    #     customer.firstname = request.POST.get("firstname")
-    #     customer.lastname = request.POST.get("lastname")
-    #     customer.email = request.POST.get("email")
-    #     customer.phone_number = request.POST.get("phone_number")
-    #     customer.address = request.POST.get("address")
-    #     customer.state = request.POST.get("state")
-    #     customer.city = request.POST.get("city")
-    #     customer.zipcode = request.POST.get("zipcode")
-    #     customer.birthdate = request.POST.get("birthdate")
-    #
-    #     # Save the updated customer instance to the database
-    #     customer.save()
+    firstname =  customer.firstname
+    lastname =  customer.lastname
+
+    # return render(request, 'successupdate.html')
+    if request.method == 'POST':
+        # Update the customer object with the form data
+        customer.firstname = request.POST.get("firstname")
+        customer.lastname = request.POST.get("lastname")
+        customer.email = request.POST.get("email")
+        customer.phone_number = request.POST.get("phone_number")
+        customer.address = request.POST.get("address")
+        customer.state = request.POST.get("state")
+        customer.city = request.POST.get("city")
+        customer.zipcode = request.POST.get("zipcode")
+        customer.birthdate = request.POST.get("birthdate")
+
+        # Save the updated customer instance to the database
+        customer.save()
 
         # Redirect to a success page or customer details page
-        # return redirect('successupdate.html')
-        # user_identifier = request.session.get('access')
-    # context = {
-    #     'customer': customer,
-    #     # 'customer_id': customer_id,
-    #
-    #     # Other context variables here
-    # }
+        return redirect('customeraccount')
+
+    context = {
+        'customer': customer,
+        'firstname': firstname,
+        'lastname': lastname,
+        'customer_id': customer_id,
+        'user_identifier':user_identifier,
+
+
+        # Other context variables here
+    }
 
     # If the request method is GET, render the edit form with the existing customer data
-    # return render(request, 'successupdate.html', context)
+    return render(request, 'successupdate.html', context)
 
-
-# def edit_customer(request, customer_id):
-#     if request.method == 'POST':
-#         try:
-#             customer = get_object_or_404(CustomerAccount, accountID=customer_id)
-#             customer.firstname = request.POST.get("firstname")
-#             customer.lastname = request.POST.get("lastname")
-#             customer.email = request.POST.get("email")
-#             customer.phone_number = request.POST.get("phone_number")
-#             customer.address = request.POST.get("address")
-#             customer.state = request.POST.get("state")
-#             customer.city = request.POST.get("city")
-#             customer.zipcode = request.POST.get("zipcode")
-#             customer.birthdate = request.POST.get("birthdate")
-#             # Update other fields as needed
-#             customer.save()
-#             return JsonResponse({'message': 'Customer data updated successfully'})
-#         except CustomerAccount.DoesNotExist:
-#             return JsonResponse({'error': 'Customer not found'}, status=404)
-#     else:
-#         return JsonResponse({'error': 'Invalid request method'}, status=400)

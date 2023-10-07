@@ -16,6 +16,9 @@
     <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
 </div>
     <div class="container">
+      <h1>Export:</h1>
+        <button class="btn btn-primary" >CSV</button>
+         <button class="btn btn-primary" id="excel">Export to Excel</button>
   <div class="row">
     <div class="col-md-12">
       <br>
@@ -71,17 +74,14 @@
     </div>
   </div>
 </div>
-<!-- Add this HTML code to your template -->
-<p>User Identifier: {{ user_identifier }}</p>
-<!-- Edit Record Modal -->
-<!-- Modal for Editing Records -->
 
-    <script>
-      var userIdentifier = '{{ user_identifier }}';
-    </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="{% static 'js/customeraccount.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.jsdelivr.net/npm/table2excel@1.0.4/dist/table2excel.min.js"></script>
+
+
+<script src="{% static 'js/customeraccount.js' %}"></script>
+
 </body>
 </html>
